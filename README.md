@@ -105,7 +105,7 @@ Before compiling, make sure to install the following dependencies:
 sudo apt update && sudo apt install -y cmake g++ libsdl2-dev zlib1g-dev libopenal-dev libgl1-mesa-dev
 ```
 
-### ⚙️ **Compilation**
+#### ⚙️ **Compilation**
 Clone the repository and compile the project using CMake:
 ```sh
 git clone https://github.com/Erick194/WolfensteinRPG-RE.git
@@ -115,13 +115,13 @@ cmake ..
 make -j$(nproc)
 ```
 
-### 🚀 **Execution**
+#### 🚀 **Execution**
 After compiling, run the game with:
 ```sh
 ./build/src/WolfensteinRPG
 ```
 
-### 📦 **Creating the AppImage**
+#### 📦 **Creating the AppImage**
 🔹 1. Download required tools
 ```sh
 wget -O appimagetool https://github.com/AppImage/AppImageKit/releases/latest/download/appimagetool-x86_64.AppImage
