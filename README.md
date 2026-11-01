@@ -23,7 +23,7 @@ Antes de compilar, asegúrate de instalar las siguientes dependencias:
 sudo apt update && sudo apt install -y cmake g++ libsdl2-dev zlib1g-dev libopenal-dev libgl1-mesa-dev
 ```
 
-### ⚙️ **Compilación**
+#### ⚙️ **Compilación**
 Clona el repositorio y compila el proyecto con CMake:
 ```sh
 git clone https://github.com/Erick194/WolfensteinRPG-RE.git
@@ -33,13 +33,13 @@ cmake ..
 make -j$(nproc)
 ```
 
-### 🚀 **Ejecución**
+#### 🚀 **Ejecución**
 Después de compilar, ejecuta el juego con:
 ```sh
 ./build/src/WolfensteinRPG
 ```
 
-### 📦 **Creación del AppImage**
+#### 📦 **Creación del AppImage**
 🔹 1. Descarga las herramientas necesarias
 ```sh
 wget -O appimagetool https://github.com/AppImage/AppImageKit/releases/latest/download/appimagetool-x86_64.AppImage
@@ -50,6 +50,76 @@ chmod +x appimagetool linuxdeploy
 ```sh
 chmod +x make-wolfenstein-rpg-linux-appimage.sh
 ./make-wolfenstein-rpg-linux-appimage.sh ./appimagetool ./linuxdeploy $(pwd) ./build/src/WolfensteinRPG
+```
+
+### 🔹 **Windows**
+
+Requisitos previos para Windows:
+
+* Visual Studio con la carga de trabajo **Desarrollo para el escritorio con C++**
+* CMake
+* vcpkg
+
+El archivo `vcpkg.json` incluido instalará las dependencias necesarias de SDL2, zlib y OpenAL.
+
+Ejecuta los comandos de compilación que aparecen a continuación desde **Developer PowerShell for Visual Studio**, que configura el entorno para que CMake pueda encontrar las herramientas de compilación necesarias. Para abrirlo:
+
+1. Abre el menú **Inicio** de Windows haciendo clic en el icono de Windows o presionando la tecla Windows.
+1. Escribe **Developer PowerShell for VS** en la barra de búsqueda.
+1. Abre **Developer PowerShell for VS**.
+
+Si no aparece `Developer PowerShell for VS`, abre Visual Studio y selecciona **Tools -> Get Tools and Features...** para abrir Visual Studio Installer. En el instalador, selecciona la pestaña **Workloads**, habilita **Desktop development with C++** y haz clic en **Modify**.
+
+Vuelve a buscar **Developer PowerShell for VS** en el menú Inicio. Cuando lo tengas abierto, verifica que el compilador de C++, CMake y vcpkg estén disponibles ejecutando:
+
+```powershell
+cl
+cmake --version
+vcpkg version
+```
+
+Si `cl`, `cmake` o `vcpkg` siguen sin estar disponibles, vuelve a Visual Studio Installer, abre la pestaña **Individual components** y asegúrate de que **C++ CMake tools for Windows** y **vcpkg package manager** estén instalados.
+
+#### ⚙️ **Compilación**
+
+Clona el repositorio:
+
+```powershell
+git clone https://github.com/Erick194/WolfensteinRPG-RE.git
+cd WolfensteinRPG-RE
+```
+
+Localiza el archivo toolchain de CMake de vcpkg:
+
+```powershell
+$vcpkgRoot = Split-Path (Get-Command vcpkg).Source
+$toolchain = Join-Path $vcpkgRoot "scripts\buildsystems\vcpkg.cmake"
+```
+
+Configura:
+
+```powershell
+cmake -S . -B build -A x64 -DCMAKE_TOOLCHAIN_FILE="$toolchain"
+```
+
+Compila:
+
+```powershell
+cmake --build build --config Release
+```
+
+El ejecutable debería encontrarse ahora en:
+
+```text
+build\src\Release\WolfensteinRPG.exe
+```
+
+#### 🚀 **Ejecución**
+
+Desde la raíz del repositorio, ejecuta:
+
+```powershell
+.\build\src\Release\WolfensteinRPG.exe
 ```
 
 ### 🎮 **Configuración por defecto de las teclas.**
@@ -105,7 +175,7 @@ Before compiling, make sure to install the following dependencies:
 sudo apt update && sudo apt install -y cmake g++ libsdl2-dev zlib1g-dev libopenal-dev libgl1-mesa-dev
 ```
 
-### ⚙️ **Compilation**
+#### ⚙️ **Compilation**
 Clone the repository and compile the project using CMake:
 ```sh
 git clone https://github.com/Erick194/WolfensteinRPG-RE.git
@@ -115,13 +185,13 @@ cmake ..
 make -j$(nproc)
 ```
 
-### 🚀 **Execution**
+#### 🚀 **Execution**
 After compiling, run the game with:
 ```sh
 ./build/src/WolfensteinRPG
 ```
 
-### 📦 **Creating the AppImage**
+#### 📦 **Creating the AppImage**
 🔹 1. Download required tools
 ```sh
 wget -O appimagetool https://github.com/AppImage/AppImageKit/releases/latest/download/appimagetool-x86_64.AppImage
@@ -132,6 +202,75 @@ chmod +x appimagetool linuxdeploy
 ```sh
 chmod +x make-wolfenstein-rpg-linux-appimage.sh
 ./make-wolfenstein-rpg-linux-appimage.sh ./appimagetool ./linuxdeploy $(pwd) ./build/src/WolfensteinRPG
+```
+
+### 🔹 **Windows**
+
+Windows prerequisites:
+* Visual Studio with the **Desktop development with C++** workload
+* CMake
+* vcpkg
+
+The included `vcpkg.json` manifest will install the required SDL2, zlib, and OpenAL dependencies.
+
+Run the compilation commands below from **Developer PowerShell for Visual Studio**, which configures the environment so CMake can find the relevant build tools. To open it:
+
+1. Open the Windows **Start** menu by clicking the Windows icon or pressing the Windows key.
+1. Type **Developer PowerShell for VS** in the search bar.
+1. Open **Developer PowerShell for VS**.
+
+If you don't see `Developer PowerShell for VS`, open Visual Studio and select **Tools -> Get Tools and Features...** to open the Visual Studio Installer. In the installer, select the **Workloads** tab, enable **Desktop development with C++**, and click **Modify**.
+
+Now search the Start menu again for **Developer PowerShell for VS**. When you have it open, verify that the C++ compiler, CMake, and vcpkg are available by running:
+
+```powershell
+cl
+cmake --version
+vcpkg version
+```
+
+If `cl`, `cmake`, or `vcpkg` is still unavailable, go back to the Visual Studio Installer, open the **Individual components** tab, and make sure **C++ CMake tools for Windows** and **vcpkg package manager** are installed.
+
+#### ⚙️ **Compilation**
+
+Clone the repository:
+
+```powershell
+git clone https://github.com/Erick194/WolfensteinRPG-RE.git
+cd WolfensteinRPG-RE
+```
+
+Locate the vcpkg CMake toolchain file:
+
+```powershell
+$vcpkgRoot = Split-Path (Get-Command vcpkg).Source
+$toolchain = Join-Path $vcpkgRoot "scripts\buildsystems\vcpkg.cmake"
+```
+
+Configure:
+
+```powershell
+cmake -S . -B build -A x64 -DCMAKE_TOOLCHAIN_FILE="$toolchain"
+```
+
+Build:
+
+```powershell
+cmake --build build --config Release
+```
+
+The executable should now exist at:
+
+```text
+build\src\Release\WolfensteinRPG.exe
+```
+
+#### 🚀 **Execution**
+
+From the repository root, run:
+
+```powershell
+.\build\src\Release\WolfensteinRPG.exe
 ```
 
 ### 🎮 **Default key configuration:**
