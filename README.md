@@ -52,6 +52,76 @@ chmod +x make-wolfenstein-rpg-linux-appimage.sh
 ./make-wolfenstein-rpg-linux-appimage.sh ./appimagetool ./linuxdeploy $(pwd) ./build/src/WolfensteinRPG
 ```
 
+### 🔹 **Windows**
+
+Requisitos previos para Windows:
+
+* Visual Studio con la carga de trabajo **Desarrollo para el escritorio con C++**
+* CMake
+* vcpkg
+
+El archivo `vcpkg.json` incluido instalará las dependencias necesarias de SDL2, zlib y OpenAL.
+
+Ejecuta los comandos de compilación que aparecen a continuación desde **Developer PowerShell for Visual Studio**, que configura el entorno para que CMake pueda encontrar las herramientas de compilación necesarias. Para abrirlo:
+
+1. Abre el menú **Inicio** de Windows haciendo clic en el icono de Windows o presionando la tecla Windows.
+1. Escribe **Developer PowerShell for VS** en la barra de búsqueda.
+1. Abre **Developer PowerShell for VS**.
+
+Si no aparece `Developer PowerShell for VS`, abre Visual Studio y selecciona **Tools -> Get Tools and Features...** para abrir Visual Studio Installer. En el instalador, selecciona la pestaña **Workloads**, habilita **Desktop development with C++** y haz clic en **Modify**.
+
+Vuelve a buscar **Developer PowerShell for VS** en el menú Inicio. Cuando lo tengas abierto, verifica que el compilador de C++, CMake y vcpkg estén disponibles ejecutando:
+
+```powershell
+cl
+cmake --version
+vcpkg version
+```
+
+Si `cl`, `cmake` o `vcpkg` siguen sin estar disponibles, vuelve a Visual Studio Installer, abre la pestaña **Individual components** y asegúrate de que **C++ CMake tools for Windows** y **vcpkg package manager** estén instalados.
+
+#### ⚙️ **Compilación**
+
+Clona el repositorio:
+
+```powershell
+git clone https://github.com/Erick194/WolfensteinRPG-RE.git
+cd WolfensteinRPG-RE
+```
+
+Localiza el archivo toolchain de CMake de vcpkg:
+
+```powershell
+$vcpkgRoot = Split-Path (Get-Command vcpkg).Source
+$toolchain = Join-Path $vcpkgRoot "scripts\buildsystems\vcpkg.cmake"
+```
+
+Configura:
+
+```powershell
+cmake -S . -B build -A x64 -DCMAKE_TOOLCHAIN_FILE="$toolchain"
+```
+
+Compila:
+
+```powershell
+cmake --build build --config Release
+```
+
+El ejecutable debería encontrarse ahora en:
+
+```text
+build\src\Release\WolfensteinRPG.exe
+```
+
+#### 🚀 **Ejecución**
+
+Desde la raíz del repositorio, ejecuta:
+
+```powershell
+.\build\src\Release\WolfensteinRPG.exe
+```
+
 ### 🎮 **Configuración por defecto de las teclas.**
 
 Adelante: W, Up<br />
