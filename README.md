@@ -134,6 +134,75 @@ chmod +x make-wolfenstein-rpg-linux-appimage.sh
 ./make-wolfenstein-rpg-linux-appimage.sh ./appimagetool ./linuxdeploy $(pwd) ./build/src/WolfensteinRPG
 ```
 
+### 🔹 **Windows**
+
+Windows prerequisites:
+* Visual Studio with the **Desktop development with C++** workload
+* CMake
+* vcpkg
+
+The included `vcpkg.json` manifest will install the required SDL2, zlib, and OpenAL dependencies.
+
+Run the compilation commands below from **Developer PowerShell for Visual Studio**, which configures the environment so CMake can find the relevant build tools. To open it:
+
+1. Open the Windows **Start** menu by clicking the Windows icon or pressing the Windows key.
+1. Type **Developer PowerShell for VS** in the search bar.
+1. Open **Developer PowerShell for VS**.
+
+If you don't see `Developer PowerShell for VS`, open Visual Studio and select **Tools -> Get Tools and Features...** to open the Visual Studio Installer. In the installer, select the **Workloads** tab, enable **Desktop development with C++**, and click **Modify**.
+
+Now search the Start menu again for **Developer PowerShell for VS**. When you have it open, verify that the C++ compiler, CMake, and vcpkg are available by running:
+
+```powershell
+cl
+cmake --version
+vcpkg version
+```
+
+If `cl`, `cmake`, or `vcpkg` is still unavailable, go back to the Visual Studio Installer, open the **Individual components** tab, and make sure **C++ CMake tools for Windows** and **vcpkg package manager** are installed.
+
+#### ⚙️ **Compilation**
+
+Clone the repository:
+
+```powershell
+git clone https://github.com/Erick194/WolfensteinRPG-RE.git
+cd WolfensteinRPG-RE
+```
+
+Locate the vcpkg CMake toolchain file:
+
+```powershell
+$vcpkgRoot = Split-Path (Get-Command vcpkg).Source
+$toolchain = Join-Path $vcpkgRoot "scripts\buildsystems\vcpkg.cmake"
+```
+
+Configure:
+
+```powershell
+cmake -S . -B build -A x64 -DCMAKE_TOOLCHAIN_FILE="$toolchain"
+```
+
+Build:
+
+```powershell
+cmake --build build --config Release
+```
+
+The executable should now exist at:
+
+```text
+build\src\Release\WolfensteinRPG.exe
+```
+
+#### 🚀 **Execution**
+
+From the repository root, run:
+
+```powershell
+.\build\src\Release\WolfensteinRPG.exe
+```
+
 ### 🎮 **Default key configuration:**
 
 Move Forward: W, Up<br />
