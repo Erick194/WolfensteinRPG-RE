@@ -7,7 +7,11 @@
 #include "Image.h"
 
 typedef unsigned char   uint8_t;
+
+#ifndef _WIN32
 typedef unsigned long DWORD_PTR;
+#endif
+
 #define BYTE		uint8_t
 #define WORD		uint16_t
 #define LOBYTE(w)	((BYTE)(((DWORD_PTR)(w)) & 0xff))
